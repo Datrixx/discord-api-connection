@@ -53,7 +53,7 @@ project-root/
 - Java 17+
 - Maven
 - Discord Bot Token
-- Minecraft Server (Paper 1.20.4)
+- Minecraft Server (Paper 1.8.9)
 
 ---
 
@@ -110,7 +110,7 @@ mvn clean package
 The system supports a simple security mechanism:
 
 - `/registerapi` – Registers a new connection between a Discord server and a Minecraft server.
-- `/loginapi` – Authenticates and enables real-time message syncing.
+- `/loginapi <UUID>` – Authenticates and enables real-time message syncing.
 
 All server entries are stored in `servers.json`.
 
