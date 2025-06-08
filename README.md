@@ -39,7 +39,7 @@ project-root/
 |------------------|-----------------------------|
 | Discord Bot      | TypeScript, DiscordX, Node.js |
 | API Server       | Express, TypeScript         |
-| Minecraft Plugin | Java, PaperMC               |
+| Minecraft Plugin | Java, Spigot 1.8.9               |
 | Build Tools      | `ts-node-dev`, `tsx`, Maven |
 | Database         | Local JSON file (`servers.json`) |
 
