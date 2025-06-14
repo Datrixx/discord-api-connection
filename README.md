@@ -121,7 +121,7 @@ The `enabled` state is saved in `api-rest.yml` for persistence.
 
 - `core/package.json` – WebSocket with dependencies like `axios`, `ws`, `uuid`, `dotenv`.
 - `discord/package.json` – Discord bot using Discord.js v14 and DiscordX.
-- `plugin/pom.xml` – Java plugin with PaperMC 1.20.4 and WebSocket.
+- `plugin/pom.xml` – Java plugin with Spigot 1.8.8 and WebSocket.
 - `plugin/src/main/java/com/discordconnection/plugin/Main.java` – Main plugin class with WS logic and state control.
 
 ---
