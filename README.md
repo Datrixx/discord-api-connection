@@ -134,9 +134,6 @@ The `enabled` state is saved in `api-rest.yml` for persistence.
 - Support multiple servers and dynamic configuration.
 - Implement unit testing and CI/CD.
 
-## ⚒️ MINECRAFT PLUGIN SNAPSHOT:
-[discordmcapi-1.0-SNAPSHOT.jar](https://github.com/danielvflores/discord-api-connection/raw/refs/heads/main/java/discordmcapi/target/discordmcapi-1.0-SNAPSHOT.jar)
-
 ---
 
 ## 📜 License
@@ -170,3 +167,8 @@ More info: https://github.com/danielvflores
 ## 🤝 Contributions
 
 Contributions welcome! If you want to extend or improve the project, open issues or pull requests.
+
+---
+
+## ⚒️ MINECRAFT PLUGIN SNAPSHOT:
+[discordmcapi-1.0-SNAPSHOT.jar](https://github.com/danielvflores/discord-api-connection/raw/refs/heads/main/java/discordmcapi/target/discordmcapi-1.0-SNAPSHOT.jar)
