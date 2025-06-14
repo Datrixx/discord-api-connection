@@ -1,0 +1,5 @@
+com\discordconnection\plugin\Main.class
+com\discordconnection\plugin\listeners\JoinQuitListener.class
+com\discordconnection\plugin\commands\TogglePluginCommand.class
+com\discordconnection\plugin\commands\RegisterApiCommand.class
+com\discordconnection\plugin\listeners\ChatListener.class
