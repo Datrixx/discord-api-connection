@@ -1,8 +1,8 @@
 # Discord-Minecraft Chat Bridge (discord-api-connection)
 
-• This is a backend small project that involves learning topics such as TypeScript, Java, and API management. It's a simple project that enables connectivity between a **Discord bot (TypeScript with DiscordX)** and a **Minecraft server (plugin created with Java)**, _using Express + TypeScript as a connecting bridge_.
+This backend project is a bridge between a **Discord bot (TypeScript with DiscordX)** and a **Minecraft server (Java plugin)**, using **Express + Cors + WS + TypeScript** as an intermediate communication layer, now including WebSocket connection for real-time communication and dynamic plugin control.
 
-> Everything currently runs locally, but the project is designed to scale in the future.
+> Currently everything runs locally, but it is designed to scale to production.
 
 ---
 
@@ -10,54 +10,57 @@
 
 ```
 project-root/
-├── api/           # Express + TypeScript API (bridge)
-├── discord/       # Discord bot using DiscordX
-└── java/plugin/   # Minecraft plugin using PaperMC
+├── core/           # WebSocket + Express + Cors
+├── discord/        # Discord Bot with DiscordX and WebSocket
+└── java/plugin/    # Minecraft Plugin with Spigot and WebSocket
 ```
 
 ---
 
 ## 💡 Features
 
-- 🔁 **Real-time two-way chat relay**  
-  Messages sent in Minecraft appear in Discord, and vice versa.
+- 🔁 **Bidirectional real-time chat**  
+  Messages (both chat and join/quit server events) sent in Minecraft are reflected on Discord and vice versa.
+
+- 🔄 **WebSocket connection with API**  
+  The plugin connects via WS to the local server to receive and send events in real time.
 
 - 🔒 **Basic authentication system**  
-  Includes `/registerapi` and `/loginapi` commands for security.
+  Commands `/registerapi` to register and `/loginapi <UUID>` to authenticate the connection.
 
-- 🧩 **Modular architecture**  
-  Each part (bot, plugin, API) is independently deployable and testable.
+- ⚙️ **Dynamic WebSocket connection control**  
+  Command `/toggleplugin` to enable/disable the connection with the API without restarting the server.
 
-- 🗂️ **Simple local JSON-based storage**  
-  Uses `servers.json` for storing registered server information.
-
----
-
-## 🚀 Tech Stack
-
-| Component        | Technology                  |
-|------------------|-----------------------------|
-| Discord Bot      | TypeScript, DiscordX, Node.js |
-| API Server       | Express, TypeScript         |
-| Minecraft Plugin | Java, Spigot 1.8.9               |
-| Build Tools      | `ts-node-dev`, `tsx`, Maven |
-| Database         | Local JSON file (`servers.json`) |
+- 🗂️ **Simple local JSON storage**  
+  Server logs and configurations saved in `servers.json` and `api-rest.yml`.
 
 ---
 
-## 📦 Setup Instructions
+## 🚀 Technology Stack
 
-### Prerequisites
+| Component        | Technology                     |
+|------------------|--------------------------------|
+| Discord Bot      | TypeScript, DiscordX, Node.js  |
+| API Server       | Express, TypeScript            |
+| Minecraft Plugin | Java, Spigot 1.8.8, WebSocket (ws) |
+| Tools            | `ts-node-dev`, `tsx`, Maven    |
+| Database         | Local JSON (`servers.json`)    |
 
-- Node.js (v18+)
+---
+
+## 📦 Installation Instructions
+
+### Requirements
+
+- Node.js v18+
 - Java 17+
 - Maven
-- Discord Bot Token
-- Minecraft Server (Paper 1.8.9)
+- Discord bot token
+- Minecraft server (Spigot 1.8.8)
 
 ---
 
-### 1. API Setup (Express + TypeScript)
+### 1. Setup Core (Express + TypeScript)
 
 ```bash
 cd api
@@ -65,21 +68,20 @@ npm install
 npm run dev
 ```
 
-> Main file: `src/index.ts`  
-> Starts an Express server to handle communication between Minecraft and Discord.
+> Main file: `core/src/index.ts`  
+> Starts Express and WebSocket server for communication with plugin and bot.
 
 ---
 
-### 2. Discord Bot Setup
+### 2. Setup Discord Bot
 
-Create a `.env` file inside the `discord/` folder with the following:
+Create a `.env` file in `discord/` with:
 
 ```env
-DISCORD_TOKEN=your-bot-token-here
-GUILD_ID=your-server-id
+BOT_TOKEN=your-token-here
 ```
 
-Start the bot using:
+Start the bot with:
 
 ```bash
 cd discord
@@ -87,50 +89,50 @@ npm install
 npm run dev
 ```
 
-> The bot listens to messages and handles commands like `/registerapi` and `/loginapi`.
+> The bot handles `/loginapi <UUID>` commands and listens to messages for synchronization.
 
 ---
 
-### 3. Minecraft Plugin Setup
+### 3. Setup Minecraft Plugin
 
-- Navigate to `java/plugin/`
+- Go to `java/plugin/`
 - Build the plugin with Maven:
 
 ```bash
 mvn clean package
 ```
 
-- Copy the resulting `.jar` from `target/` to your Minecraft server's `plugins/` folder.
-- Start the Minecraft server (ensure it is using **Paper 1.20.4**).
+- Copy the resulting `.jar` from `target/` into the `plugins/` folder of your Minecraft server (ONLY the `discordmcapi-1.0-SNAPSHOT.jar`).
+- Start the Spigot 1.8.8 server.
 
 ---
 
-## 🔐 Authentication Flow
+## 🔐 Authentication & Control Flow
 
-The system supports a simple security mechanism:
+- `/registerapi` returns a random UUID in the Minecraft chat and saves it in `config.yml`.
+- `/loginapi <UUID>` registers, authenticates, and activates the WebSocket bridge connection.
+- `/toggleplugin` enables or disables the WebSocket connection and message synchronization without restarting the server.
 
-- `/registerapi` – Registers a new connection between a Discord server and a Minecraft server.
-- `/loginapi <UUID>` – Authenticates and enables real-time message syncing.
-
-All server entries are stored in `servers.json`.
+The `enabled` state is saved in `api-rest.yml` for persistence.
 
 ---
 
 ## 📁 Key Files
 
-- `api/package.json` – Express app using `axios`, `uuid`, `dotenv`, etc.
-- `discord/package.json` – Discord bot (uses Discord.js v14).
-- `plugin/pom.xml` – Java Minecraft plugin using PaperMC 1.20.4.
+- `core/package.json` – WebSocket with dependencies like `axios`, `ws`, `uuid`, `dotenv`.
+- `discord/package.json` – Discord bot using Discord.js v14 and DiscordX.
+- `plugin/pom.xml` – Java plugin with PaperMC 1.20.4 and WebSocket.
+- `plugin/src/main/java/com/discordconnection/plugin/Main.java` – Main plugin class with WS logic and state control.
 
 ---
 
 ## 🔮 Future Improvements
 
-- 🌍 Move from local JSON storage to a cloud database (e.g., MongoDB, PostgreSQL).
-- ☁️ Deploy the Express API on a cloud platform.
-- 🛡️ Improve authentication and add token-based access.
-- 📌 Support multi-server connections and dynamic configuration.
-- 🧪 Add unit tests and CI workflows.
+- Migrate local JSON storage to cloud database (MongoDB, PostgreSQL).
+- Deploy API on cloud platform (AWS, Heroku, etc.).
+- Improve authentication with tokens and roles.
+- Support multiple servers and dynamic configuration.
+- Implement unit testing and CI/CD.
 
 ---
 
@@ -138,8 +140,30 @@ All server entries are stored in `servers.json`.
 
 MIT License
 
+Copyright (c) 2025 Daniel Flores Viera
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+More info: https://github.com/danielvflores
+
 ---
 
 ## 🤝 Contributions
 
-Contributions are welcome! If you plan to extend this project, feel free to open issues or pull requests.
+Contributions welcome! If you want to extend or improve the project, open issues or pull requests.
