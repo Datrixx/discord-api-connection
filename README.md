@@ -1,4 +1,4 @@
-# Discord-Minecraft Chat Bridge (discord-api-connection)
+# Discord-Minecraft Chat Bridge (MC-DISCORD-WS)
 
 This backend project is a bridge between a **Discord bot (TypeScript with DiscordX)** and a **Minecraft server (Java plugin)**, using **Express + Cors + WS + TypeScript** as an intermediate communication layer, now including WebSocket connection for real-time communication and dynamic plugin control.
 
