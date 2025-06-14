@@ -171,12 +171,7 @@ Contributions welcome! If you want to extend or improve the project, open issues
 ---
 
 ## ⚒️ MINECRAFT PLUGIN SNAPSHOT:
-[discordmcapi-1.0-SNAPSHOT.jar](https://github.com/danielvflores/discord-api-connection/raw/refs/heads/main/java/discordmcapi/target/discordmcapi-1.0-SNAPSHOT.jar)
+⚡ Download: [discordmcapi-1.0-SNAPSHOT.jar](https://github.com/danielvflores/discord-api-connection/raw/refs/heads/main/java/discordmcapi/target/discordmcapi-1.0-SNAPSHOT.jar)
 
----
+⚡ Last release [![](https://img.shields.io/badge/release-minecraft--discord--api-blue?style=flat-square)](https://github.com/danielvflores/discord-api-connection/releases/tag/minecraft-discord-api)
 
-## 📦 Releases
-
-[![Última release](https://img.shields.io/badge/release-minecraft--discord--api-blue?style=flat-square)](https://github.com/danielvflores/discord-api-connection/releases/tag/minecraft-discord-api)
-
-Conexión entre Minecraft y Discord usando API personalizada.
