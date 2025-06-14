@@ -135,7 +135,7 @@ The `enabled` state is saved in `api-rest.yml` for persistence.
 - Implement unit testing and CI/CD.
 
 ## ⚒️ MINECRAFT PLUGIN SNAPSHOT:
-[Download latest release](https://github.com/danielvflores/discord-api-connection/blob/main/java/discordmcapi/target/discordmcapi-1.0-SNAPSHOT.jar)
+[discordmcapi-1.0-SNAPSHOT.jar](https://github.com/danielvflores/discord-api-connection/raw/refs/heads/main/java/discordmcapi/target/discordmcapi-1.0-SNAPSHOT.jar)
 
 ---
 
