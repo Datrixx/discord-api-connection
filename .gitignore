@@ -10,3 +10,4 @@ node_modules/
 # Ignorar carpetas de sistema
 .DS_Store
 Thumbs.db
+
