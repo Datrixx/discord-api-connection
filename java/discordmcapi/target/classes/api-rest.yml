@@ -1,5 +1,0 @@
-enabled: true
-base_url: "http://localhost:3000/api"
-auth_token: "supersecrettoken"
-timeout: 5000
-debug: false
